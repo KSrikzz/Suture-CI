@@ -31,7 +31,7 @@ class DockerWatcher:
                         raw_logs = container.logs().decode('utf-8')
                         print("[*] Extracting error context and sending to Brain...")
 
-                        self.brain.run_healing_cycle(raw_logs, "app.py")
+                        self.brain.run_healing_cycle(raw_logs, "tests/app.py")
         except KeyboardInterrupt:
             print("\n[*] Stopping Watcher...")
             sys.exit(0)

@@ -56,7 +56,7 @@ class SutureBrain:
             
             current_fix = self.ask_ai_for_fix(error_blocks[0], original_code, last_validation_error)
 
-            temp_file = f"temp_{target_file_path}"
+            temp_file = f"temp_{os.path.basename(target_file_path)}"
             with open(temp_file, "w") as f:
                 f.write(current_fix)
 
