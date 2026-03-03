@@ -1,9 +1,9 @@
 import os
 import time
 import ollama
-from log_parser import LogParser
-from github_operator import GitOperator
-from validator import Validator 
+from core.log_parser import LogParser
+from core.github_operator import GitOperator
+from core.validator import Validator 
 from dotenv import load_dotenv
 
 class SutureBrain:

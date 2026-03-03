@@ -1,7 +1,7 @@
 import docker
 import os
 import sys
-from orchestrator import SutureBrain
+from core.orchestrator import SutureBrain
 from dotenv import load_dotenv
 
 class DockerWatcher:

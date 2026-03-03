@@ -1,5 +1,4 @@
-# main.py
-from watcher import DockerWatcher
+﻿from monitor.watcher import DockerWatcher
 
 if __name__ == "__main__":
     print("""
