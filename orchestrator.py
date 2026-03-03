@@ -1,4 +1,5 @@
 import os
+import time
 import ollama
 from log_parser import LogParser
 from github_operator import GitOperator
@@ -42,13 +43,16 @@ class SutureBrain:
         print(f"[*] Brain is analyzing crash via {self.model}...")
         fixed_code = self.ask_ai_for_fix(error_blocks[0], original_code)
 
-        print("[*] Hands are opening the Pull Request...")
+        timestamp = int(time.time())
+        unique_branch = f"suture/fix-{timestamp}"
+
+        print(f"[*] Hands are opening the Pull Request on branch: {unique_branch}")
         self.git.create_fix_pr(
-            branch_name="suture/auto-fix-01",
+            branch_name=unique_branch,
             file_path=target_file_path,
             new_content=fixed_code,
             commit_message="fix: autonomous repair of detected crash",
-            pr_title="🤖 Suture_CI: Automated Repair",
+            pr_title=f"🤖 Suture_CI: Automated Repair({timestamp})",
             pr_body="This PR was generated automatically by Suture_CI after detecting an error in the logs."
         )
 
