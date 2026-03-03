@@ -1,6 +1,7 @@
 import os
 from github import Github
 from github.GithubException import GithubException
+from dotenv import load_dotenv
 
 class GitOperator:
     def __init__(self, token, repo_name):
@@ -38,11 +39,23 @@ class GitOperator:
             print(f"[-] GitHub API Error: {e}")
 
 if __name__ == "__main__":
+    load_dotenv()
     TOKEN = os.getenv("GITHUB_TOKEN") 
-    REPO_NAME = "your-username/Suture-CI"
+    REPO_NAME = os.getenv("GITHUB_REPO")
     
-    if TOKEN:
-        agent = GitOperator(TOKEN, REPO_NAME)
-        print("GitOperator successfully initialized!")
+    if not TOKEN or not REPO_NAME:
+        print("[-] Error: Missing environment variables.")
+        print("Please set both GITHUB_TOKEN and GITHUB_REPO before running.")
     else:
-        print("Notice: GITHUB_TOKEN environment variable is not set yet.")
+        agent = GitOperator(TOKEN, REPO_NAME)
+        print(f"[*] GitOperator successfully initialized for {REPO_NAME}!")
+        print("[*] Attempting to create a test PR...")
+        
+        branch = "suture-ai/test-fix-02"
+        target_file = "target_file.txt" 
+        new_code = "This file has been successfully healed by Suture_CI using environment variables.\n"
+        message = "fix: automated resolution via env vars"
+        title = "🤖 Suture_CI: Automated Repair (Env Var Test)"
+        body = "### Root Cause Analysis\nSuccessfully tested environment variable configuration.\n\n*This PR was generated automatically by Suture_CI.*"
+
+        agent.create_fix_pr(branch, target_file, new_code, message, title, body)
